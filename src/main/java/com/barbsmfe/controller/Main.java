@@ -8,6 +8,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		GerenciadorDeArquivos gerenciadorDeArquivos = new GerenciadorDeArquivos();
+		
 		String[] instanciaSenhaETexto = gerenciadorDeArquivos.leitorDeArquivo("tarefa6.txt");
 	
 		AESDecodificador decodificador = new AESDecodificador(instanciaSenhaETexto[0]);
