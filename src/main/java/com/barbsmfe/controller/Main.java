@@ -1,19 +1,28 @@
 package com.barbsmfe.controller;
 
 import com.barbsmfe.domain.*;
+import com.barbsmfe.model.*;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		AESDecodificadorCBC decodificadorCbc = new AESDecodificadorCBC();
-		AESCodificadorCBC codificador = new AESCodificadorCBC();
-		/*
-		System.out.println(decodificadorCbc.decodificarMensagem(
-				"4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81",
-				"140b41b22a29beb4061bda66b6747e14"));
-*/
-		System.out.println(decodificadorCbc.decrypt("4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81",
-				"140b41b22a29beb4061bda66b6747e14"));
+		GerenciadorDeArquivos gerenciadorDeArquivos = new GerenciadorDeArquivos();
+		String[] instanciaSenhaETexto = gerenciadorDeArquivos.leitorDeArquivo("tarefa6.txt");
+	
+		AESDecodificador decodificador = new AESDecodificador(instanciaSenhaETexto[0]);
+		AESCodificador codificador = new AESCodificador(instanciaSenhaETexto[0]);
+				
+		String chave = instanciaSenhaETexto[1];
+		String mensagem = instanciaSenhaETexto[2];
+		
+		if(instanciaSenhaETexto[3].equals("CIPHERTEXT")) {
+			System.out.println("Decriptada: " + decodificador.decodificarMensagem(mensagem, chave));
+		} else if(instanciaSenhaETexto[3].equals("PLAINTEXT")) {
+			String mensagemEncriptada = codificador.encriptarMensagem(mensagem, chave);
+			String mensagemDecriptada = decodificador.decodificarMensagem(mensagemEncriptada, chave);
+			System.out.println("Encriptada: " + mensagemEncriptada + "\nDecriptada: " + mensagemDecriptada);
+		}
 	}
+	
 }
